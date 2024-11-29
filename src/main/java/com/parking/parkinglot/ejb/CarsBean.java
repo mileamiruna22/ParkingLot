@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -65,5 +66,46 @@ public class CarsBean {
             entityManager.persist(car);
 
     }
+
+    public CarDto findById(Long carId) {
+        LOG.info("findById");
+        try {
+            Car car = entityManager.find(Car.class, carId);
+            if (car == null) {
+                return null; // Sau poți arunca o excepție, în funcție de cerințe
+            }
+            // Refolosim copyCarsToDto pentru un singur element
+            return copyCarsToDto(List.of(car)).get(0);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    public void updateCar(Long carId, String licensePlate, String parkingSpot, Long userId) {
+
+        LOG.info("updateCar");
+
+        Car car = entityManager.find(Car.class, carId);
+        car.setLicensePlate(licensePlate);
+        car.setParkingSpot(parkingSpot);
+
+        User oldUser = car.getUser();
+        oldUser.getCars().remove(car);
+
+        User user = entityManager.find(User.class, userId);
+        user.getCars().add(car);
+        car.setUser(user);
+    }
+
+    public void deleteCarsByIds(Collection<Long> carIds) {
+
+        LOG.info("deleteCarsByIds");
+
+        for (Long carId : carIds) {
+            Car car = entityManager.find(Car.class, carId);
+            entityManager.remove(car);
+        }
+    }
+
 
 }
