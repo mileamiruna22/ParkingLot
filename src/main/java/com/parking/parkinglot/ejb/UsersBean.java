@@ -36,7 +36,8 @@ public class UsersBean {
         for (User user : users) {
             UserDto userDto = new UserDto(
                     user.getUsername(),
-                    user.getEmail()
+                    user.getEmail(),
+                    user.getId()
             );
             dtos.add(userDto);
         }
