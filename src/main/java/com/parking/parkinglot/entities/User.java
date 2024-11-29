@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "user")
 public class User {
     private Long id;
-
     private String username;
 
     @Column(name = "username", unique = true)
