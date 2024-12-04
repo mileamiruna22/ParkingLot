@@ -28,16 +28,15 @@ public class Cars extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-
-        String[] carIdsAsString = request.getParameterValues("car_Ids");
+        String[] carIdsAsString = request.getParameterValues("car_ids");
         if (carIdsAsString != null) {
             List<Long> carIds = new ArrayList<>();
-            for(String carIdsAsString : carIdsAsString) {
-                carIds.add(Long.parseLong(carIdsAsString));
+            for (String carIdsAsStr : carIdsAsString){
+                carIds.add(Long.parseLong(carIdsAsStr));
             }
-            carsBean.deleteCarsByIds(carsIds);
+            carsBean.deleteCarsByIds(carIds);
         }
-
-        request.sendRedirect(request.getContextPath()+"/Cars");
+        response.sendRedirect(request.getContextPath() + "/Cars");
     }
 }
+
