@@ -5,6 +5,12 @@
 <t:pageTemplate pageTitle="Users">
     <h1>Users</h1>
     <div class="container text-center">
+        <form method="POST" action="${pageContext.request.contextPath}/Users">
+        <c:if test="${pageContext.request.isUserInRole('WRITE_USERS')}">
+        <a href="${pageContext.request.contextPath}/AddUser" class="btn btn-primary btn-lg">Add User</a>
+        </c:if>
+        </form>
+
         <c:forEach var="user" items="${users}">
         <div class="row">
             <div class="col">
