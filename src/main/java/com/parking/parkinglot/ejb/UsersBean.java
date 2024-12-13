@@ -48,7 +48,7 @@ public class UsersBean {
     }
 
     @Inject
-
+    PasswordBean passwordBean;
 
     public void createUser(String username, String email, String password,
                            Collection<String> groups) {
