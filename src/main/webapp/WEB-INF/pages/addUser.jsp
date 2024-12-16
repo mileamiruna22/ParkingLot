@@ -28,7 +28,7 @@
         <div class="mb-3">
             <label for="user_groups" class="form-label">Groups</label>
             <select class="form-select" id="user_groups" name="user_groups" multiple>
-                <c:forEach var="user_groups" items="${usersGroups}">
+                <c:forEach var="user_groups" items="${userGroups}">
                     <option value="${user_groups}">${user_groups}</option>
                 </c:forEach>
             </select>
