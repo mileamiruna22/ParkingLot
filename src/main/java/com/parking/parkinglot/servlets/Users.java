@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @DeclareRoles({"READ_USERS", "WRITE_USERS"})
@@ -36,7 +37,20 @@ public class Users extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Obținem ID-urile utilizatorilor selectați din checkbox-uri
+        String[] userIds = request.getParameterValues("user_ids");
+
+        if (userIds != null) {
+            // Convertim ID-urile utilizatorilor într-o listă de UserDto
+            List<UserDto> selectedUsers = usersBean.findUsersByIds(userIds);
+
+            // Setăm lista utilizatorilor selectați în request
+            request.setAttribute("invoices", selectedUsers);
+        }
+
+        // Redirectăm la pagina Users pentru afișarea utilizatorilor selectați
+        doGet(request, response);
     }
+
 }

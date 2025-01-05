@@ -11,9 +11,11 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Stateless
 public class UsersBean {
@@ -70,4 +72,24 @@ public class UsersBean {
             entityManager.persist(userGroup);
         }
     }
+
+    public List<UserDto> findUsersByIds(String[] userIds) {
+        // Convertim array-ul de string-uri într-o listă de integeri
+        List<Integer> ids = Arrays.stream(userIds)
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+
+        // Căutăm utilizatorii în baza de date pe baza ID-urilor
+        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.id IN :ids", User.class)
+                .setParameter("ids", ids)
+                .getResultList();
+
+
+        // Convertim entitățile User în DTO-uri UserDto
+        return users.stream()
+                .map(user -> new UserDto(user.getEmail(), user.getUsername(), user.getId()))
+                .collect(Collectors.toList());
+
+    }
+
 }

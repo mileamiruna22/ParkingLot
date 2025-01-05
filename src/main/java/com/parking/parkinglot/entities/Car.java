@@ -13,6 +13,8 @@ public class Car {
 
     private User user;
 
+    private CarPhoto carPhoto;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     public User getUser() {
@@ -50,4 +52,14 @@ public class Car {
     public Long getId() {
         return id;
     }
+
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public CarPhoto getCarPhoto() {
+        return carPhoto;
+    }
+
+    public void setCarPhoto(CarPhoto carPhoto) {
+        this.carPhoto = carPhoto;
+    }
+
 }
