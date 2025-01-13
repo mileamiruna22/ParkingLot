@@ -13,24 +13,32 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <c:if test="${pageContext.request.isUserInRole('WRITE_USERS')}">
                     <th>Select</th>
-                    <th>Email</th>
+                    </c:if>
                     <th>Username</th>
+                    <th>Email</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="user" items="${users}">
+
                     <tr>
+                        <c:if test="${pageContext.request.isUserInRole('WRITE_USERS')}">
                         <td>
                             <input type="checkbox" name="user_ids" value="${user.id}" />
                         </td>
+                </c:if>
                         <td>${user.email}</td>
                         <td>${user.username}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+            <c:if test="${pageContext.request.isUserInRole('WRITE_USERS')}">
             <button type="submit" name="action" value="invoice" class="btn btn-success">Invoice</button>
+            </c:if>
         </form>
 
         <c:if test="${not empty invoices}">

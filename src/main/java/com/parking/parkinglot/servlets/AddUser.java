@@ -31,7 +31,7 @@ public class AddUser extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String[] userGroups =
-                request.getParameterValues("user_groups");
+                request.getParameterValues("user_groups"); 
         if (userGroups == null) {
             userGroups = new String[0];
         }
