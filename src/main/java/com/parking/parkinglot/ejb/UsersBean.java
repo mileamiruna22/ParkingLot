@@ -74,18 +74,18 @@ public class UsersBean {
     }
 
     public List<UserDto> findUsersByIds(String[] userIds) {
-        // Convertim array-ul de string-uri într-o listă de integeri
+
         List<Integer> ids = Arrays.stream(userIds)
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
 
-        // Căutăm utilizatorii în baza de date pe baza ID-urilor
+
         List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.id IN :ids", User.class)
                 .setParameter("ids", ids)
                 .getResultList();
 
 
-        // Convertim entitățile User în DTO-uri UserDto
+
         return users.stream()
                 .map(user -> new UserDto(user.getEmail(), user.getUsername(), user.getId()))
                 .collect(Collectors.toList());

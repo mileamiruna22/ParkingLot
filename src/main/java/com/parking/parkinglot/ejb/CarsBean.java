@@ -74,9 +74,9 @@ public class CarsBean {
         try {
             Car car = entityManager.find(Car.class, carId);
             if (car == null) {
-                return null; // Sau poți arunca o excepție, în funcție de cerințe
+                return null;
             }
-            // Refolosim copyCarsToDto pentru un singur element
+
             return copyCarsToDto(List.of(car)).get(0);
         } catch (Exception ex) {
             throw new EJBException(ex);

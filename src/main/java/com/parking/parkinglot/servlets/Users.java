@@ -38,18 +38,15 @@ public class Users extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obținem ID-urile utilizatorilor selectați din checkbox-uri
+
         String[] userIds = request.getParameterValues("user_ids");
 
         if (userIds != null) {
-            // Convertim ID-urile utilizatorilor într-o listă de UserDto
-            List<UserDto> selectedUsers = usersBean.findUsersByIds(userIds);
 
-            // Setăm lista utilizatorilor selectați în request
+            List<UserDto> selectedUsers = usersBean.findUsersByIds(userIds);
             request.setAttribute("invoices", selectedUsers);
         }
 
-        // Redirectăm la pagina Users pentru afișarea utilizatorilor selectați
         doGet(request, response);
     }
 
